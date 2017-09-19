@@ -38,9 +38,10 @@ fi
 docker volume create --name=signatumd-data
 docker run -v signatumd-data:/signatum --rm $SIGT_IMAGE sigt_init
 
-# Start signatumd via upstart and docker
-curl https://raw.githubusercontent.com/squbs/docker-signatumd/master/init/upstart.init > /etc/init/docker-signatumd.conf
-start docker-signatumd
+# Start signatumd via systemd and docker
+curl https://raw.githubusercontent.com/squbs/docker-signatumd/master/init/docker-signatumd.service > /etc/systemd/docker-signatumd.service 
+systemctl enable docker-signatumd.service
+
 
 set +ex
 echo "Resulting signatum.conf:"
