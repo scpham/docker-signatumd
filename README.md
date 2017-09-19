@@ -22,7 +22,7 @@ Really Fast Quick Start
 
 One liner for Ubuntu Trusty/Xenial/Zesty machines with JSON-RPC enabled on localhost and adds upstart init script:
 
-    curl https://raw.githubusercontent.com/squbs/docker-signatumd/master/bootstrap-host.sh
+    curl https://raw.githubusercontent.com/squbs/docker-signatumd/master/bootstrap-host.sh | sh
 
 
 Quick Start

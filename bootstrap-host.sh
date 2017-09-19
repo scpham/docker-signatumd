@@ -6,9 +6,6 @@ set -ex
 
 SIGT_IMAGE=${SIGT_IMAGE:-squbs/signatumd}
 
-distro=$1
-shift
-
 memtotal=$(grep ^MemTotal /proc/meminfo | awk '{print int($2/1024) }')
 
 #
