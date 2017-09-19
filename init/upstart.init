@@ -1,0 +1,15 @@
+# Copy to /etc/init/docker-signatumd.conf
+description "Docker container for signatumd p2p node"
+start on filesystem and started docker
+stop on runlevel [!2345]
+respawn
+pre-start script
+  # Clean-up if left behind
+  docker rm -f signatumd-node || true
+  
+  # Attempt to always update and fail silently if the network isn't ready
+  docker pull squbs/signatumd || true
+end script
+script
+  exec docker run --rm -v signatumd-data:/signatum --name=signatumd-node --rm -p 33334:33334 -p 127.0.0.1:33333:33333 squbs/signatumd
+end script

@@ -1,0 +1,50 @@
+#!/bin/bash
+
+set -ex
+
+# This shouldn't be in the Dockerfile or containers built from the same image
+# will have the same credentials.
+echo "Working directory set to:"
+echo $HOME
+
+if [ ! -d "$HOME/.signatum" ]; then
+  mkdir -p $HOME/.signatum
+fi
+
+if [ ! -e "$HOME/.signatum/signatum.conf" ]; then
+    echo "Creating signatum.conf"
+
+    # Seed a random password for JSON RPC server
+    cat <<EOF > $HOME/.signatum/signatum.conf
+disablewallet=${DISABLEWALLET:-0}
+printtoconsole=${PRINTTOCONSOLE:-1}
+rpcuser=${RPCUSER:-signatumrpc}
+rpcpassword=${RPCPASSWORD:-`dd if=/dev/urandom bs=33 count=1 2>/dev/null | base64`}
+rpcport=33334
+server=1
+#stake=1
+listen=1
+#daemon=1
+addnode=68.48.131.196
+addnode=122.129.64.16
+addnode=122.129.64.15
+addnode=203.128.6.219
+addnode=35.185.223.20
+addnode=35.185.18.85
+addnode=35.189.14.132
+addnode=35.187.220.84
+addnode=104.154.215.3
+addnode=104.154.193.236
+addnode=35.184.121.184
+addnode=35.184.49.142
+addnode=104.198.232.113
+addnode=130.211.127.202
+addnode=104.199.207.148
+addnode=104.199.11.56
+EOF
+
+fi
+
+cat $HOME/.signatum/signatum.conf
+
+echo "Initialization completed successfully"
