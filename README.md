@@ -12,15 +12,15 @@ Docker image that runs the Signatum signatumd node in a container for easy deplo
 Requirements
 ------------
 
-* Physical machine, cloud instance, or VPS that supports Docker (i.e. [Vultr](http://bit.ly/1HngXg0), [Digital Ocean](http://bit.ly/18AykdD), KVM or XEN based VMs) running Ubuntu 14.04 or later (*not OpenVZ containers!*)
-* At least 5 GB to store the block chain files (and always growing!)
+* Physical machine, cloud instance, or VPS that supports Docker (i.e. [Digital Ocean](https://goo.gl/eWziH7), KVM or XEN based VMs) running Ubuntu 16.04 or later (*not OpenVZ containers!*)
+* At least 5 GB to store the block chain files (the chain will contine to grow)
 * At least 1 GB RAM + 2 GB swap file
 
 
 Really Fast Quick Start
 -----------------------
 
-One liner for Ubuntu Trusty/Xenial/Zesty machines with JSON-RPC enabled on localhost and adds upstart init script:
+One liner for Ubuntu Xenial/Zesty machines with JSON-RPC enabled on localhost and adds systemd service:
 
     curl https://raw.githubusercontent.com/squbs/docker-signatumd/master/bootstrap-host.sh | sh
 
