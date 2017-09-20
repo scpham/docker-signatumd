@@ -58,11 +58,14 @@ Documentation
 
 * Additional documentation in the [docs folder](docs).
 
+
 Donations
 ---------
 
 Are not needed.  But if you feel obliged:
 
 SIGT: BBsMH69Lv7z4qyncPQBzeSyZjmxhmiGHrg
+
 BTC: 1PEL8acsjGpJPsfyNn6nCiqGNgDGZPP51N
+
 
