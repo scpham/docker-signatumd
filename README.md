@@ -43,13 +43,13 @@ Quick Start
 
 3. You can then access the daemon's output thanks to the [docker logs command]( https://docs.docker.com/reference/commandline/cli/#logs)
 
-        ```docker logs -f signatumd-node```
+        docker logs -f signatumd-node
 
 4. Install optional init scripts for upstart and systemd are in the `init` directory.
 
 5. Run the following to open a bash shell within a running container to interact with signatumd:
 
-	docker exec -it signatumd-node bash
+	```docker exec -it signatumd-node bash```
 
 
 Documentation
