@@ -1,6 +1,6 @@
 APPNAME=signatumd
 #VERSION=$(shell git describe --tags)
-VERSION=1.0
+VERSION=1.1
 NAMESPACE=squbs
 
 build:  
