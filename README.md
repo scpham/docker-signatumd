@@ -3,9 +3,8 @@ Signatumd for Docker
 
 [![Docker Stars](https://img.shields.io/docker/stars/squbs/signatumd.svg)](https://hub.docker.com/r/squbs/signatumd/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/squbs/signatumd.svg)](https://hub.docker.com/r/squbs/signatumd/)
-[![Build Status](https://travis-ci.org/squbs/docker-signatumd.svg?branch=master)](https://travis-ci.org/squbs/docker-signatumd/)
 [![ImageLayers](https://images.microbadger.com/badges/image/squbs/signatumd.svg)](https://microbadger.com/#/images/squbs/signatumd)
-[![Version](https://images.microbadger.com/badges/image/squbs/signatumd.svg)](https://microbadger.com/images/squbs/signatumd)
+[![Version](https://images.microbadger.com/badges/version/squbs/signatumd.svg)](https://microbadger.com/version/squbs/signatumd)
 
 Docker image that runs the Signatum signatumd node in a container for easy deployment.
 
