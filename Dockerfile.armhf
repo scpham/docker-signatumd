@@ -1,0 +1,60 @@
+FROM armv7/armhf-ubuntu:xenial
+MAINTAINER squbs <squbs@protonmail.com>
+
+ARG USER_ID
+ARG GROUP_ID
+
+ENV HOME /signatum
+
+# add user with specified (or default) user/group ids
+ENV USER_ID ${USER_ID:-1000}
+ENV GROUP_ID ${GROUP_ID:-1000}
+
+# add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
+RUN groupadd -g ${GROUP_ID} signatum \
+	&& useradd -u ${USER_ID} -g signatum -s /bin/bash -m -d /signatum signatum
+
+RUN apt update && apt install -y git
+RUN apt-get install -y qt4-qmake libqt4-dev libminiupnpc-dev libdb++-dev libdb-dev libcrypto++-dev libqrencode-dev libboost-all-dev build-essential libboost-system-dev libboost-filesystem-dev libboost-program-options-dev libboost-thread-dev libboost-filesystem-dev libboost-program-options-dev libboost-thread-dev libssl-dev libdb++-dev libssl-dev ufw git
+RUN apt-get install -y apt-transport-https ca-certificates curl software-properties-common
+RUN add-apt-repository -y ppa:bitcoin/bitcoin
+RUN apt-get update
+RUN apt-get install -y libdb4.8-dev libdb4.8++-dev
+RUN cd ${HOME} && git clone https://github.com/signatumd/source.git
+
+RUN cd ${HOME}/source/src/leveldb && chmod +x build_detect_platform && make clean && make libleveldb.a libmemenv.a
+RUN cd ${HOME}/source/src && make -f makefile.unix && cp signatumd /usr/bin/signatumd
+
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# grab gosu for easy step-down from root
+ENV GOSU_VERSION 1.7
+RUN set -x \
+	&& apt-get update && apt-get install -y --no-install-recommends \
+		ca-certificates \
+		wget \
+	&& wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture)" \
+	&& wget -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture).asc" \
+	&& export GNUPGHOME="$(mktemp -d)" \
+	&& gpg --keyserver ha.pool.sks-keyservers.net --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4 \
+	&& gpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu \
+	&& rm -r "$GNUPGHOME" /usr/local/bin/gosu.asc \
+	&& chmod +x /usr/local/bin/gosu \
+	&& gosu nobody true \
+	&& apt-get purge -y \
+		ca-certificates \
+		wget \
+	&& apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+ADD ./bin /usr/local/bin
+
+VOLUME ["/signatum"]
+
+EXPOSE 26174 26178 33333 33334
+
+WORKDIR /signatum
+
+COPY docker-entrypoint.sh /usr/local/bin/
+ENTRYPOINT ["docker-entrypoint.sh"]
+
+CMD ["sigt_oneshot"]

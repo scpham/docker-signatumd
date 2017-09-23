@@ -23,6 +23,9 @@ One liner for Ubuntu Xenial/Zesty machines with JSON-RPC enabled on localhost an
 
     curl https://raw.githubusercontent.com/squbs/docker-signatumd/master/bootstrap-host.sh | sh
 
+For Raspberry Pi 2/3:
+
+    curl https://raw.githubusercontent.com/squbs/docker-signatumd/master/bootstrap-host-armhf.sh | sh
 
 Quick Start
 -----------
