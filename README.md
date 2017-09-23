@@ -21,11 +21,11 @@ Really Fast Quick Start
 
 One liner for Ubuntu Xenial/Zesty machines with JSON-RPC enabled on localhost and adds systemd service:
 
-    curl https://raw.githubusercontent.com/squbs/docker-signatumd/master/bootstrap-host.sh | sh
+    curl https://raw.githubusercontent.com/squbs/docker-signatumd/master/bootstrap-host.sh | sudo sh
 
 For Raspberry Pi 2/3:
 
-    curl https://raw.githubusercontent.com/squbs/docker-signatumd/master/bootstrap-host-armhf.sh | sh
+    curl https://raw.githubusercontent.com/squbs/docker-signatumd/master/bootstrap-host-armhf.sh | sudo sh
 
 Quick Start
 -----------
