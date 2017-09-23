@@ -11,7 +11,7 @@ Restart=always
 # Modify IP6_PREFIX to match network config
 Environment="NAME=signatumd"
 Environment="DATA_VOL=signatumd-data"
-Environment="IMG=squbs/signatumd:1.1"
+Environment="IMG=squbs/signatumd:1.1-armhf"
 Environment="PORT=33333:33333/tcp"
 Environment="PORTRPC=33334:33334/tcp"
 
