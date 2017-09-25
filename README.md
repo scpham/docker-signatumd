@@ -52,8 +52,29 @@ Quick Start
 
 5. Run the following to open a bash shell within a running container to interact with signatumd:
 
-	```docker exec -it signatumd-node bash```
+    docker exec -it signatumd-node bash
 
+6. To copy config file in and out of the container: 
+
+    Copy to your local dir: docker cp signatumd-node:/signatum/.signatum/signatum.conf .
+    Copy back to the container: docker signatum.conf signatumd-node:/signatum/.signatum/signatum.conf 
+
+    And then stop/start the container.
+
+
+7. To backup wallet you can either simply dump wallet or copy 'wallet.dat' out of the container: 
+
+    Approach 1: This will create a human readable file dump (depending on encryption status etc):
+
+    (1a) Dump wallet: docker exec -it  signatumd-node signatumd dumpwallet backup_wallet.dat
+    (1b) Copy to local dir: docker cp signatumd-node:/signatum/backup_wallet.dat .
+
+    OR
+
+    Approach 2: This will create a binary file:
+
+    (2) Copy dat file to local dir: docker cp signatumd-node:/signatum/.signatum/wallet.dat backup_wallet.dat
+	
 
 Documentation
 -------------
