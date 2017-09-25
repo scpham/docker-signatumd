@@ -1,4 +1,4 @@
-Signatumd for Docker
+﻿Signatumd for Docker
 ===================
 
 [![Docker Stars](https://img.shields.io/docker/stars/squbs/signatumd.svg)](https://hub.docker.com/r/squbs/signatumd/)
