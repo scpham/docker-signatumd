@@ -59,7 +59,7 @@ Quick Start
         Copy to your local dir: docker cp signatumd-node:/signatum/.signatum/signatum.conf .
         Copy back to the container: docker signatum.conf signatumd-node:/signatum/.signatum/signatum.conf 
 
-        And then stop/start the container.
+        And then stop/start the container
 
 
 7. To backup wallet you can either simply dump wallet or copy 'wallet.dat' out of the container: 
