@@ -52,7 +52,7 @@ Quick Start
 
 5. Run the following to open a bash shell within a running container to interact with signatumd:
 
-    docker exec -it signatumd-node bash
+        docker exec -it signatumd-node bash
 
 6. To copy config file in and out of the container: 
 
