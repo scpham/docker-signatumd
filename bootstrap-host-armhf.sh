@@ -23,8 +23,8 @@ free -m
 curl -fsSL get.docker.com -o /tmp/get-docker.sh
 sh /tmp/get-docker.sh
 
-puser=$(whoami)
-sudo usermod -aG docker $puser
+#puser=$(whoami)
+#sudo usermod -aG docker $puser
 
 # Always clean-up, but fail successfully
 docker kill signatumd-node 2>/dev/null || true
