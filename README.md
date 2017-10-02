@@ -87,22 +87,20 @@ General Commands
         $ docker ps
 
         # note the 'COINTAINER ID' for signatumd
-        
         CONTAINER ID        IMAGE                 COMMAND                  CREATED             STATUS              PORTS                                                       NAMES
-        ee825ac17747        squbs/signatumd:1.0   "docker-entrypoint..."   21 seconds ago      Up 21 seconds       26174/tcp, 26178/tcp, 33334/tcp, 0.0.0.0:33333->33333/tcp   signatumd`
+        `ee825ac17747`        squbs/signatumd:1.0   "docker-entrypoint..."   21 seconds ago      Up 21 seconds       26174/tcp, 26178/tcp, 33334/tcp, 0.0.0.0:33333->33333/tcp   signatumd`
 
 	    $ docker inspect --format='{{.LogPath}}' ee825ac1774
 
         # the output lists the actual the container log file:  
-	    # e.g.
-        # /var/lib/docker/containers/ee825ac17747f2abaf627600860697e1213249ab83bb0cf136684dd4a4b7f55d/ee825ac17747f2abaf627600860697e1213249ab83bb0cf136684dd4a4b7f55d-json.log
+        # e.g. /var/lib/docker/containers/ee825ac17747f2abaf627600860697e1213249ab83bb0cf136684dd4a4b7f55d/ee825ac17747f2abaf627600860697e1213249ab83bb0cf136684dd4a4b7f55d-json.log
         
 
 5. To copy a signatum.conf file directly and/or wallet.dat:
 
         $ docker volume inspect signatumd-data
-        
-        
+       
+        # output: 
         [
             {
                 "CreatedAt": "2017-09-26T16:07:53Z",
