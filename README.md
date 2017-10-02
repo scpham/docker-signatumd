@@ -88,11 +88,11 @@ General Commands
 
         # note the 'COINTAINER ID' for signatumd
         CONTAINER ID        IMAGE                 COMMAND                  CREATED             STATUS              PORTS                                                       NAMES
-        `ee825ac17747`        squbs/signatumd:1.0   "docker-entrypoint..."   21 seconds ago      Up 21 seconds       26174/tcp, 26178/tcp, 33334/tcp, 0.0.0.0:33333->33333/tcp   signatumd`
+        ee825ac17747        squbs/signatumd:1.0   "docker-entrypoint..."   21 seconds ago      Up 21 seconds       26174/tcp, 26178/tcp, 33334/tcp, 0.0.0.0:33333->33333/tcp   signatumd`
 
 	    $ docker inspect --format='{{.LogPath}}' ee825ac1774
 
-        # the output lists the actual the container log file:  
+        # the output is location and filename of the container log file:  
         # e.g. /var/lib/docker/containers/ee825ac17747f2abaf627600860697e1213249ab83bb0cf136684dd4a4b7f55d/ee825ac17747f2abaf627600860697e1213249ab83bb0cf136684dd4a4b7f55d-json.log
         
 
@@ -107,7 +107,7 @@ General Commands
                 "Driver": "local",
                 "Labels": {},
                 "Mountpoint": "/var/lib/docker/volumes/signatumd-data/_data",
-               	"Name": "signatumd-data",
+                "Name": "signatumd-data",
                 "Options": {},
                 "Scope": "local"
             }
