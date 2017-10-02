@@ -88,36 +88,35 @@ General Commands
 
         # note the 'COINTAINER ID' for signatumd
         
-        `CONTAINER ID        IMAGE                 COMMAND                  CREATED             STATUS              PORTS                                                       NAMES
-ee825ac17747        squbs/signatumd:1.0   "docker-entrypoint..."   21 seconds ago      Up 21 seconds       26174/tcp, 26178/tcp, 33334/tcp, 0.0.0.0:33333->33333/tcp   signatumd`
+        CONTAINER ID        IMAGE                 COMMAND                  CREATED             STATUS              PORTS                                                       NAMES
+        ee825ac17747        squbs/signatumd:1.0   "docker-entrypoint..."   21 seconds ago      Up 21 seconds       26174/tcp, 26178/tcp, 33334/tcp, 0.0.0.0:33333->33333/tcp   signatumd`
 
-	$ docker inspect --format='{{.LogPath}}' ee825ac1774
+	    $ docker inspect --format='{{.LogPath}}' ee825ac1774
 
         # the output lists the actual the container log file:  
-	`e.g.
-        /var/lib/docker/containers/ee825ac17747f2abaf627600860697e1213249ab83bb0cf136684dd4a4b7f55d/ee825ac17747f2abaf627600860697e1213249ab83bb0cf136684dd4a4b7f55d-json.log
-        `
+	    # e.g.
+        # /var/lib/docker/containers/ee825ac17747f2abaf627600860697e1213249ab83bb0cf136684dd4a4b7f55d/ee825ac17747f2abaf627600860697e1213249ab83bb0cf136684dd4a4b7f55d-json.log
+        
 
 5. To copy a signatum.conf file directly and/or wallet.dat:
 
         $ docker volume inspect signatumd-data
         
-        `
-	[
-	    {
-		"CreatedAt": "2017-09-26T16:07:53Z",
-		"Driver": "local",
-		"Labels": {},
-		"Mountpoint": "/var/lib/docker/volumes/signatumd-data/_data",
-		"Name": "signatumd-data",
-		"Options": {},
-		"Scope": "local"
-	    }
-	]
-	`
+        
+        [
+            {
+                "CreatedAt": "2017-09-26T16:07:53Z",
+                "Driver": "local",
+                "Labels": {},
+                "Mountpoint": "/var/lib/docker/volumes/signatumd-data/_data",
+               	"Name": "signatumd-data",
+                "Options": {},
+                "Scope": "local"
+            }
+        ]
 
         # note the 'Mountpoint' directory.  This is the system location of all your files within the container.
-	# you can CD into this directory - use sudo if you have permission issues - and then copy your conf and wallet files over existing files in the `.signatum/` folder
+        # you can CD into this directory - use sudo if you have permission issues - and then copy your conf and wallet files over existing files in the `.signatum/` folder
         # WARNING: make sure you stop the docker signatumd process before changing config and wallet files
 
 
