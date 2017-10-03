@@ -12,9 +12,9 @@ Requirements
 ------------
 
 * Physical machine, cloud instance, or VPS that supports Docker (i.e. [Digital Ocean](https://goo.gl/eWziH7), KVM or XEN based VMs) running Ubuntu 16.04 or later (*not OpenVZ containers!*)
-* At least 5 GB to store the block chain files (the chain will contine to grow)
+* At least 5 GB to store the block chain files (chain will grow continously)
 * At least 1 GB RAM + 2 GB swap file
-* Run `sudo usermod -aG docker <user>` and then logout/login again or reboot, if you're a new Docker user
+* Run `sudo usermod -aG docker <user>` and then logout/login or reboot, if you're a new Docker user
 
 
 Really Fast Quick Start
@@ -107,7 +107,7 @@ General Commands
         # Docker will output location and filename of the container log file:  
         $ /var/lib/docker/containers/ee825ac17747f2abaf627600860697e1213249ab83bb0cf136684dd4a4b7f55d/ee825ac17747f2abaf627600860697e1213249ab83bb0cf136684dd4a4b7f55d-json.log
         
-        $ tail -f <file name>
+        $ tail -f ee825ac17747f2abaf627600860697e1213249ab83bb0cf136684dd4a4b7f55d-json.log
 
 5. Modify `signatum.conf` and/or `wallet.dat` files without `docker cp`:
 
