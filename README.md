@@ -14,7 +14,7 @@ Requirements
 * Physical machine, cloud instance, or VPS that supports Docker (i.e. [Digital Ocean](https://goo.gl/eWziH7), KVM or XEN based VMs) running Ubuntu 16.04 or later (*not OpenVZ containers!*)
 * At least 5 GB to store the block chain files (the chain will contine to grow)
 * At least 1 GB RAM + 2 GB swap file
-* Note: if you have Docker permission issues run: `usermod -aG docker <user>` and then logout/logback-in or reboot
+* If you are installing Docker for the first time you will run into permission issues.  Run `usermod -aG docker <user>` and then logout/login again or reboot
 
 
 Really Fast Quick Start
@@ -40,7 +40,7 @@ Quick Start
             -p 127.0.0.1:33334:33334 \
             squbs/signatumd
 
-2. Verify that the container is running and signatumd node is downloading the blockchain
+2. Verify that the container is running and `signatumd` daemon is downloading the blockchain:
 
         $ docker ps
         CONTAINER ID        IMAGE                         COMMAND             CREATED             STATUS              PORTS                                              NAMES
@@ -48,7 +48,7 @@ Quick Start
 
 3. You can then access the daemon's output thanks to the [docker logs command]( https://docs.docker.com/reference/commandline/cli/#logs)
 
-        docker logs -f signatumd-node
+        $ docker logs -f signatumd-node
 
 4. Install optional init scripts for upstart and systemd are in the `init` directory.
 
@@ -56,47 +56,60 @@ Quick Start
 General Commands
 ----------------
 
-1. Run the following to open a bash shell within a running container to interact with signatumd:
+1. Open a bash shell within the running container and issue commands to the daemon:
 
-        docker exec -it signatumd-node bash
+        $ docker exec -it signatumd-node bash
+        $ signatumd getinfo
+        $ signatumd getstakinginfo
 
-2. To copy config file in and out of the container: 
+2. Copy file (e.g. signatum.conf) in and out of the container: 
+        
+        # Stop the container
+        $ docker stop signatumd
 
-        Copy to your local dir: docker cp signatumd-node:/signatum/.signatum/signatum.conf .
-        Copy back to the container: docker signatum.conf signatumd-node:/signatum/.signatum/signatum.conf 
+        # Copy to your local dir:
+        $ docker cp signatumd-node:/signatum/.signatum/signatum.conf .
+        
+        # Copy back to the container: 
+        $ docker signatum.conf signatumd-node:/signatum/.signatum/signatum.conf 
 
-        And then stop/start the container
+        $ docker start signatumd
+
+3. Backup wallet (two approaches): 
+
+        # Approach 1 
+        # This will create a human readable file dump (depending on encryption status etc):
+
+        (a) Dump wallet:
+            $ docker exec -it  signatumd-node signatumd dumpwallet backup_wallet.dat
+        
+        (b) Copy to local dir: 
+            $ docker cp signatumd-node:/signatum/backup_wallet.dat .
 
 
-3. To backup wallet you can either simply dump wallet or copy 'wallet.dat' out of the container: 
+        # Approach 2
+        # This will create a binary file:
 
-        Approach 1: This will create a human readable file dump (depending on encryption status etc):
+        (a) Copy dat file to local dir: 
+            $ docker cp signatumd-node:/signatum/.signatum/wallet.dat backup_wallet.dat
 
-        (a) Dump wallet: docker exec -it  signatumd-node signatumd dumpwallet backup_wallet.dat
-        (b) Copy to local dir: docker cp signatumd-node:/signatum/backup_wallet.dat .
-
-        OR
-
-        Approach 2: This will create a binary file:
-
-        (a) Copy dat file to local dir: docker cp signatumd-node:/signatum/.signatum/wallet.dat backup_wallet.dat
-	
-
-4. To 'tail -f' container log file directly:
+4. Check `signatumd` log file using system `tail -f` command:
 
         $ docker ps
 
-        # note the 'COINTAINER ID' for signatumd
+        # Note the 'COINTAINER ID' for signatumd
         CONTAINER ID        IMAGE                 COMMAND                  CREATED             STATUS              PORTS                                                       NAMES
         ee825ac17747        squbs/signatumd:1.0   "docker-entrypoint..."   21 seconds ago      Up 21 seconds       26174/tcp, 26178/tcp, 33334/tcp, 0.0.0.0:33333->33333/tcp   signatumd`
 
-	    $ docker inspect --format='{{.LogPath}}' ee825ac1774
+        # Run inspect command on container id
+        $ docker inspect --format='{{.LogPath}}' ee825ac17747
 
-        # the output is location and filename of the container log file:  
-        # e.g. /var/lib/docker/containers/ee825ac17747f2abaf627600860697e1213249ab83bb0cf136684dd4a4b7f55d/ee825ac17747f2abaf627600860697e1213249ab83bb0cf136684dd4a4b7f55d-json.log
+        # Docker will output location and filename of the container log file:  
+        $ /var/lib/docker/containers/ee825ac17747f2abaf627600860697e1213249ab83bb0cf136684dd4a4b7f55d/ee825ac17747f2abaf627600860697e1213249ab83bb0cf136684dd4a4b7f55d-json.log
         
+        $ tail -f <file name>
 
-5. To copy a signatum.conf file directly and/or wallet.dat:
+5. Modify `signatum.conf` and/or `wallet.dat` files without `docker cp`:
 
         $ docker volume inspect signatumd-data
        
@@ -113,9 +126,9 @@ General Commands
             }
         ]
 
-        # note the 'Mountpoint' directory.  This is the system location of all your files within the container.
-        # you can CD into this directory - use sudo if you have permission issues - and then copy your conf and wallet files over existing files in the `.signatum/` folder
-        # WARNING: make sure you stop the docker signatumd process before changing config and wallet files
+        # The 'Mountpoint' directory is the system location of all your files that reside within the container.
+        # `cd` into this directory - use sudo if you have permission issues - and then copy your conf and wallet files over existing files that may exist in the `.signatum/` folder
+        # WARNING: make sure to stop the `signatumd` process before changing config or wallet files
 
 
 Documentation
@@ -127,10 +140,7 @@ Documentation
 Donations
 ---------
 
-Are not needed.  But if you feel obliged:
+Are not needed.  But if you feel so obliged:
 
-SIGT: BBsMH69Lv7z4qyncPQBzeSyZjmxhmiGHrg
-
-BTC: 1PEL8acsjGpJPsfyNn6nCiqGNgDGZPP51N
-
-
+        SIGT: BBsMH69Lv7z4qyncPQBzeSyZjmxhmiGHrg
+        BTC:  1PEL8acsjGpJPsfyNn6nCiqGNgDGZPP51N
