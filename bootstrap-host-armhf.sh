@@ -6,25 +6,28 @@ set -ex
 
 SIGT_IMAGE=${SIGT_IMAGE:-squbs/signatumd:1.1-armhf}
 
-memtotal=$(grep ^MemTotal /proc/meminfo | awk '{print int($2/1024) }')
+#memtotal=$(grep ^MemTotal /proc/meminfo | awk '{print int($2/1024) }')
 
 #
 # Only do swap hack if needed
 #
-if [ $memtotal -lt 2048 -a $(swapon -s | wc -l) -lt 2 ]; then
-    fallocate -l 2048M /swap || dd if=/dev/zero of=/swap bs=1M count=2048
-    mkswap /swap
-    grep -q "^/swap" /etc/fstab || echo "/swap swap swap defaults 0 0" >> /etc/fstab
-    swapon -a
-fi
-
-free -m
+#if [ $memtotal -lt 2048 -a $(swapon -s | wc -l) -lt 2 ]; then
+#    sudo fallocate -l 2048M /swap || dd if=/dev/zero of=/swap bs=1M count=2048
+#    sudo mkswap /swap
+#    sudo grep -q "^/swap" /etc/fstab || echo "/swap swap swap defaults 0 0" >> /etc/fstab
+#    sudo swapon -a
+#fi
+#
+#free -m
 
 curl -fsSL get.docker.com -o /tmp/get-docker.sh
 sh /tmp/get-docker.sh
 
-#puser=$(whoami)
-#sudo usermod -aG docker $puser
+#try to add user to group
+puser=$(whoami)
+sudo usermod -aG docker $puser
+
+newgrp docker
 
 # Always clean-up, but fail successfully
 docker kill signatumd-node 2>/dev/null || true
@@ -44,7 +47,6 @@ docker run -v signatumd-data:/signatum --rm $SIGT_IMAGE sigt_init
 wget https://raw.githubusercontent.com/squbs/docker-signatumd/master/init/docker-signatumd-armhf.service
 sudo mv docker-signatumd-armhf.service /etc/systemd/system/docker-signatumd.service
 sudo systemctl enable docker-signatumd.service
-
 
 set +ex
 echo "Resulting signatum.conf:"
