@@ -14,7 +14,7 @@ Requirements
 * Physical machine, cloud instance, or VPS that supports Docker (i.e. [Digital Ocean](https://goo.gl/eWziH7), KVM or XEN based VMs) running Ubuntu 16.04 or later (*not OpenVZ containers!*)
 * At least 5 GB to store the block chain files (the chain will contine to grow)
 * At least 1 GB RAM + 2 GB swap file
-* If you are installing Docker for the first time you will run into permission issues.  Run `usermod -aG docker <user>` and then logout/login again or reboot
+* Run `sudo usermod -aG docker <user>` and then logout/login again or reboot, if you're a new Docker user
 
 
 Really Fast Quick Start
@@ -127,7 +127,8 @@ General Commands
         ]
 
         # The 'Mountpoint' directory is the system location of all your files that reside within the container.
-        # `cd` into this directory - use sudo if you have permission issues - and then copy your conf and wallet files over existing files that may exist in the `.signatum/` folder
+        # 'cd' into this directory - use sudo if you have permission issues - and then copy your conf 
+        # and wallet files over existing files that may exist in the `.signatum/` folder
         # WARNING: make sure to stop the `signatumd` process before changing config or wallet files
 
 
