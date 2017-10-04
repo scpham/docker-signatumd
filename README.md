@@ -134,7 +134,7 @@ General Commands
 
         # username and password can be found in the `signatum.conf` file
         # daemon-host-ip can be localhost/0.0.0.0/127.0.0.1 or a lan/wan ip address
-        $ curl --user '<username>:<password>' --data-binary '{"jsonrpc": "2.0","method": "getinfo", "params": [] }' -H 'content-type: application/json-rpc;' http://<daemon-host-ip>:33334
+        $ curl -s --user '<username>:<password>' --data-binary '{"jsonrpc": "2.0","method": "getinfo", "params": [] }' -H 'content-type: application/json-rpc;' http://<daemon-host-ip>:33334
 
    If you have `jq` installed, you can do some pretty json printing:
         
