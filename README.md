@@ -138,11 +138,11 @@ General Commands
 
    If you have `jq` installed, you can do some pretty json printing:
         
-        $ curl --user '<username>:<password>' --data-binary '{"jsonrpc": "2.0","method": "getinfo", "params": [] }' -H 'content-type: application/json-rpc;' http://127.0.0.1:33334 | jq '.'
+        $ curl -s --user '<username>:<password>' --data-binary '{"jsonrpc": "2.0","method": "getinfo", "params": [] }' -H 'content-type: application/json-rpc;' http://127.0.0.1:33334 | jq '.'
 
    Or `python -m json.tool`:
 
-        $ curl --user '<username>:<password>' --data-binary '{"jsonrpc": "2.0","method": "getinfo", "params": [] }' -H 'content-type: application/json-rpc;' http://127.0.0.1:33334 | python -m json.tool
+        $ curl -s --user '<username>:<password>' --data-binary '{"jsonrpc": "2.0","method": "getinfo", "params": [] }' -H 'content-type: application/json-rpc;' http://127.0.0.1:33334 | python -m json.tool
 
 
 Documentation
