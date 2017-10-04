@@ -24,7 +24,7 @@ rpcport=33334
 server=1
 staking=1
 listen=1
-maxconnections=100
+maxconnections=50
 addnode=68.48.131.196
 addnode=122.129.64.16
 addnode=122.129.64.15
@@ -41,6 +41,7 @@ addnode=104.198.232.113
 addnode=130.211.127.202
 addnode=104.199.207.148
 addnode=104.199.11.56
+rpcallowip=*
 EOF
 
 fi

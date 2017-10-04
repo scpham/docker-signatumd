@@ -37,7 +37,7 @@ Quick Start
         docker volume create --name=signatumd-data
         docker run -v signatumd-data:/signatum --name=signatumd -d \
             -p 33333:33333 \
-            -p 127.0.0.1:33334:33334 \
+            -p 33334:33334 \
             squbs/signatumd
 
 2. Verify that the container is running and `signatumd` daemon is downloading the blockchain:
@@ -129,6 +129,20 @@ General Commands
         # 'cd' into this directory - use sudo if you have permission issues - and then copy your conf 
         # and wallet files over existing files that may exist in the `.signatum/` folder
         # WARNING: make sure to stop the `signatumd` process before changing config or wallet files
+
+5. Simple json-rpc call to signatumd from another machine (or host):
+
+        # username and password can be found in the `signatum.conf` file
+        # daemon-host-ip can be localhost/0.0.0.0/127.0.0.1 or a lan/wan ip address
+        $ curl --user '<username>:<password>' --data-binary '{"jsonrpc": "2.0","method": "getinfo", "params": [] }' -H 'content-type: application/json-rpc;' http://<daemon-host-ip>:33334
+
+   If you have `jq` installed, you can do some pretty json printing:
+        
+        $ curl --user '<username>:<password>' --data-binary '{"jsonrpc": "2.0","method": "getinfo", "params": [] }' -H 'content-type: application/json-rpc;' http://127.0.0.1:33334 | jq '.'
+
+   Or `python -m json.tool`:
+
+        $ curl --user '<username>:<password>' --data-binary '{"jsonrpc": "2.0","method": "getinfo", "params": [] }' -H 'content-type: application/json-rpc;' http://127.0.0.1:33334 | python -m json.tool
 
 
 Documentation
