@@ -35,7 +35,7 @@ Quick Start
 1. Create a `signatumd-data` volume to persist the signatumd blockchain data, should exit immediately.  The `signatumd-data` container will store the blockchain when the node container is recreated (software upgrade, reboot, etc):
 
         docker volume create --name=signatumd-data
-        docker run -v signatumd-data:/signatum --name=signatumd-node -d \
+        docker run -v signatumd-data:/signatum --name=signatumd -d \
             -p 33333:33333 \
             -p 127.0.0.1:33334:33334 \
             squbs/signatumd
@@ -44,13 +44,13 @@ Quick Start
 
         $ docker ps
         CONTAINER ID        IMAGE                         COMMAND             CREATED             STATUS              PORTS                                              NAMES
-        ee825ac17747     squbs/signatumd:latest     "sigt_oneshot"       2 seconds ago       Up 1 seconds        127.0.0.1:33333->33333/tcp, 0.0.0.0:33334->33334/tcp   signatumd-node
+        ee825ac17747     squbs/signatumd:latest     "sigt_oneshot"       2 seconds ago       Up 1 seconds        127.0.0.1:33333->33333/tcp, 0.0.0.0:33334->33334/tcp   signatumd
 
 3. You can then access the daemon's output thanks to the [docker logs command]( https://docs.docker.com/reference/commandline/cli/#logs)
 
-        $ docker logs -f signatumd-node
+        $ docker logs -f signatumd
 
-4. Install optional init scripts for upstart and systemd are in the `init` directory.
+4. Install optional init scripts for upstart and systemd located in the `init` directory.
 
 
 General Commands
@@ -58,21 +58,20 @@ General Commands
 
 1. Open a bash shell within the running container and issue commands to the daemon:
 
-        $ docker exec -it signatumd-node bash
+        $ docker exec -it signatumd bash
         $ signatumd getinfo
         $ signatumd getstakinginfo
 
 2. Copy file (e.g. signatum.conf) in and out of the container: 
         
-        # Stop the container
-        $ docker stop signatumd
-
         # Copy to your local dir:
-        $ docker cp signatumd-node:/signatum/.signatum/signatum.conf .
+        $ docker cp signatumd:/signatum/.signatum/signatum.conf .
         
         # Copy back to the container: 
-        $ docker signatum.conf signatumd-node:/signatum/.signatum/signatum.conf 
+        $ docker signatum.conf signatumd:/signatum/.signatum/signatum.conf 
 
+        # Stop/start the container
+        $ docker stop signatumd
         $ docker start signatumd
 
 3. Backup wallet (two approaches): 
@@ -81,17 +80,17 @@ General Commands
         # This will create a human readable file dump (depending on encryption status etc):
 
         (a) Dump wallet:
-            $ docker exec -it  signatumd-node signatumd dumpwallet backup_wallet.dat
+            $ docker exec -it  signatumd signatumd dumpwallet backup_wallet.dat
         
         (b) Copy to local dir: 
-            $ docker cp signatumd-node:/signatum/backup_wallet.dat .
+            $ docker cp signatumd:/signatum/backup_wallet.dat .
 
 
         # Approach 2
         # This will create a binary file:
 
         (a) Copy dat file to local dir: 
-            $ docker cp signatumd-node:/signatum/.signatum/wallet.dat backup_wallet.dat
+            $ docker cp signatumd:/signatum/.signatum/wallet.dat backup_wallet.dat
 
 4. Check `signatumd` log file using system `tail -f` command:
 
@@ -126,7 +125,7 @@ General Commands
             }
         ]
 
-        # The 'Mountpoint' directory is the system location of all your files that reside within the container.
+        # The 'Mountpoint' directory is the system location of all your user files that reside within the container.
         # 'cd' into this directory - use sudo if you have permission issues - and then copy your conf 
         # and wallet files over existing files that may exist in the `.signatum/` folder
         # WARNING: make sure to stop the `signatumd` process before changing config or wallet files
