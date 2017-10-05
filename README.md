@@ -15,6 +15,7 @@ Requirements
 * At least 5 GB to store the block chain files (chain will grow continously)
 * At least 1 GB RAM + 2 GB swap file
 * Run `sudo usermod -aG docker <user>` and then logout/login or reboot, if you're a new Docker user
+* Encrypted wallets will need to be unlocked for staking (see below)
 
 
 Really Fast Quick Start
@@ -143,6 +144,18 @@ General Commands
    Or `python -m json.tool`:
 
         $ curl -s --user '<username>:<password>' --data-binary '{"jsonrpc": "2.0","method": "getinfo", "params": [] }' -H 'content-type: application/json-rpc;' http://127.0.0.1:33334 | python -m json.tool
+
+7. For POS phase, you will need to unlock your wallet - if it is encrypted - and set a timeout:
+
+        $ docker exec -it signatumd bash
+
+        # daemon command line: `walletpassphrase <passphrase> <timeout> [stakingonly]`
+        # set timeout to t+1 year in seconds: 31557600
+        $ signatumd walletpassphrase 'sigt1234' 31557600 true
+
+        # command will return immediately, if successful.
+        # wait for 5 minutes and then check staking status:
+        $ signatumd getstakinginfo
 
 
 Documentation
