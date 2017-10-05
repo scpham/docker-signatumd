@@ -88,3 +88,15 @@
 
         $ curl -s --user '<username>:<password>' --data-binary '{"jsonrpc": "2.0","method": "getinfo", "params": [] }' -H 'content-type: application/json-rpc;' http://127.0.0.1:33334 | python -m json.tool
 
+## For POS phase, you will need to unlock your wallet - if it is encrypted - and set a timeout:
+
+        $ docker exec -it signatumd bash
+
+        # daemon command line: `walletpassphrase <passphrase> <timeout> [stakingonly]`
+        # set timeout to t+1 year in seconds: 31557600
+        $ signatumd walletpassphrase 'sigt1234' 31557600 true
+
+        # command will return immediately, if successful.
+        # wait for 5 minutes and then check staking status:
+        $ signatumd getstakinginfo
+
