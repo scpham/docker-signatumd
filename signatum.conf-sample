@@ -1,7 +1,7 @@
 disablewallet=0
 printtoconsole=1
 rpcuser=signatumrpc
-rpcpassword=omoEAbfWk44px2JHDEr
+rpcpassword=YourSuperGreatPassword_DO_NOT_USE_THIS_DEFAULT_TEXT_OR_YOU_WILL_GET_ROBBED
 rpcport=33334
 server=1
 staking=1
